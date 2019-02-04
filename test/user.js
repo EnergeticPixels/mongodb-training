@@ -32,6 +32,7 @@ describe('User Model', () => {
 
     it('should find one user with name of joe', (done) => {
       
+      done();
     });
 
     it('should update a user', () => {

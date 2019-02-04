@@ -4,7 +4,8 @@
   "description": "Training from Udemy.com for MongoDB. Training given by Stephen Grider.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit"
+    "mocha": "mocha -R min --exit",
+    "test": "nodemon --exec mocha"
   },
   "author": "Anthony Jackman <energeticpixels@gmail.com>",
   "license": "MIT",
