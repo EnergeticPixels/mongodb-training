@@ -1,0 +1,51 @@
+{
+  "name": "mongodb-training",
+  "version": "0.0.1",
+  "description": "Training from Udemy.com for MongoDB. Training given by Stephen Grider.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anthony Jackman <energeticpixels@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "eslint",
+    "babel",
+    "prettier",
+    "node",
+    "es8",
+    "mocha",
+    "mongodb",
+    "mongoose"
+  ],
+  "bugs": {
+    "url": "https://github.com/EnergeticPixels/mongodb-training/issues"
+  },
+  "homepage": "https://github.com/EnergeticPixels/mongodb-training#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EnergeticPixels/mongodb-training.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-istanbul": "^5.1.0",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9",
+    "nyc": "^13.1.0",
+    "prettier": "^1.16.4"
+  }
+}

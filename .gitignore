@@ -1,0 +1,46 @@
+# Ignore Node & Bower
+###################
+node_modules
+bower_components
+.tmp
+tmp/
+emailErr/
+mailLog/
+
+# Ignore Test reporters
+###################
+**/test/coverage
+report
+.nyc_output
+coverage
+
+
+# mongo db
+###################
+#Don't commit Mongo Database files
+*.lock
+*.0
+*.1
+*.ns
+journal
+data
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+# *.sdf
+*.mdf
+*.ldf
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Secure Connection Stuff #
+###########################
+ssl/**
