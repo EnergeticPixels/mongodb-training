@@ -6,15 +6,15 @@ require('./test_helper.js');
 
 describe('User Model', () => {
 
-  let joe;
-
-  beforeEach((done) => {
-    joe = new User({ name: 'Joe', postCount: 0 });
-    joe.save()
-      .then(() => done());
-  });
-
   describe('basic operations', () => {
+
+    let joe;
+
+    beforeEach((done) => {
+      joe = new User({ name: 'Joe' });
+      joe.save()
+        .then(() => done());
+    });
 
     function assertName(operation, done) {
       operation
@@ -119,6 +119,14 @@ describe('User Model', () => {
   });
 
   describe('mongo operators', () => {
+    
+    let joe;
+
+    beforeEach((done) => {
+      joe = new User({ name: 'Joe', postCount: 0 });
+      joe.save()
+        .then(() => done());
+    });
 
     it('a user postCount increments by 1', (done) => {
       User.updateMany({ name: 'Joe' }, { $inc:{ postCount: 1 }})
@@ -129,7 +137,25 @@ describe('User Model', () => {
         });
     });
 
+
+  });
+
+  describe('validation records', () => {
     
+    it('requires a username', () => {
+      const user = new User({ name: undefined });
+      const validationResult = user.validateSync();
+      const { message } = validationResult.errors.name;
+      assert( message == 'Name is required.' );
+    });
+
+    it('name must be longer than two characters', () => {
+      const user = new User({ name: 'Al' });
+      const validationResult = user.validateSync();
+      const { message } = validationResult.errors.name;
+
+      assert( message === 'Name must be longer than 2 characters.');
+    })
   })
 
 })
