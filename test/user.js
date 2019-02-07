@@ -6,15 +6,15 @@ require('./test_helper.js');
 
 describe('User Model', () => {
 
+  let joe;
+
+  beforeEach((done) => {
+    joe = new User({ name: 'Joe', postCount: 0 });
+    joe.save()
+      .then(() => done());
+  });
+
   describe('basic operations', () => {
-
-    let joe;
-
-    beforeEach((done) => {
-      joe = new User({ name: 'Joe'});
-      joe.save()
-        .then(() => done());
-    });
 
     function assertName(operation, done) {
       operation
@@ -117,5 +117,19 @@ describe('User Model', () => {
     });
 
   });
+
+  describe('mongo operators', () => {
+
+    it('a user postCount increments by 1', (done) => {
+      User.updateMany({ name: 'Joe' }, { $inc:{ postCount: 1 }})
+        .then(() => User.findOne({ name: 'Joe' }))
+        .then((user) => {
+          assert(user.postCount === 1);
+          done();
+        });
+    });
+
+    
+  })
 
 })
