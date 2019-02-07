@@ -155,7 +155,17 @@ describe('User Model', () => {
       const { message } = validationResult.errors.name;
 
       assert( message === 'Name must be longer than 2 characters.');
-    })
+    });
+
+    it('disallows invalid records to be saved', (done) => {
+      const user = new User({ name: 'Al' });
+      user.save()
+        .catch((validationResult) => {
+          const { message } = validationResult.errors.name;
+          assert(message === 'Name must be longer than 2 characters.');
+          done();
+        })
+    });
   })
 
 })
