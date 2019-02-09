@@ -128,7 +128,7 @@ describe('User Model', () => {
         .then(() => done());
     });
 
-    it('a user postCount increments by 1', (done) => {
+    xit('a user postCount increments by 1', (done) => {
       User.updateMany({ name: 'Joe' }, { $inc:{ postCount: 1 }})
         .then(() => User.findOne({ name: 'Joe' }))
         .then((user) => {
@@ -210,8 +210,20 @@ describe('User Model', () => {
           assert(user.posts.length === 0)
           done();
         });
-    })
+    });
+  });
 
+  describe('Virtual types', () => {
+
+    it('postCount returns number of posts', (done) => {
+      const joe = new User({ name: 'Joe', posts: [{ title: 'New Title'}]});
+      joe.save()
+        .then(() => User.findOne({ name: 'Joe' }))
+        .then((user) => {
+          assert(joe.postCount === 1);
+          done();
+        })
+    });
   });
 
 })

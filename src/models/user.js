@@ -11,8 +11,15 @@ const UserSchema = new Schema({
     },
     required: [true, 'Name is required.']
   },
-  postCount: Number,
   posts: [PostSchema]
+});
+
+// must use the old method of function() { in this instance and NOT
+// fat arrow.  if used fat arrow, 'this' would have referenced whole file.
+// going old school, keeps 'this' keyword local referencing the schema which
+// references the model.
+UserSchema.virtual('postCount').get(function() {
+  return this.posts.length;
 });
 
 const User = mongoose.model('user', UserSchema);
