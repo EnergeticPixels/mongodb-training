@@ -11,6 +11,7 @@ const UserSchema = new Schema({
     },
     required: [true, 'Name is required.']
   },
+  likes: Number,
   posts: [PostSchema]
 });
 
