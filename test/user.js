@@ -251,7 +251,7 @@ describe('User Model', () => {
         .then(() => done());
     });
 
-    it.only('saves a relation between a user and a blogpost', (done) => {
+    it('saves a relation between a user and a blogpost', (done) => {
 
       User.findOne({ name: 'Joe' })
         // idea of using 'query' method of mongodb
@@ -260,26 +260,40 @@ describe('User Model', () => {
         // must explictly do each populate.
         .populate('blogPosts')
         .then((user) => {
-           console.info(user);
-           // console.info(user.blogPosts[0]);
-           // console.info();
-          
+          // console.info(user);
+          // console.info(user.blogPosts[0]);
+          // console.info();
           assert(user.blogPosts[0].title === 'JS is Great')
           done();
         })
     });
 
-    xit('', (done) => {
-
+    it('saves a full relatation graph', (done) => {
+      User.findOne({ name: 'Joe'})
+        .populate({
+          // first get me all blogposts associated with 'Joe'
+          path: 'blogPosts',
+          model: 'blogPost',
+          // then within the returned blogPosts get me all the comments
+          // joe has made
+          populate: {
+            path: 'comments',
+            model: 'comment',
+            populate: {
+              path: 'user',
+              model: 'user'
+            }
+          }
+        })
+        .then((user) => {
+          //console.info(user.blogPosts[0].comments[0].user.name)
+          assert(user.name === 'Joe');
+          assert(user.blogPosts[0].title === 'JS is Great');
+          assert(user.blogPosts[0].comments[0].content === 'Congrats on great post');
+          assert(user.blogPosts[0].comments[0].user.name === 'Joe');
+          done();
+        })
     });
-
-    xit('', (done) => {
-
-    });
-
-    xit('', (done) => {
-
-    })
   });
 
 })
