@@ -13,7 +13,14 @@ before((done) => {
 
 
 beforeEach((done) => {
-  mongoose.connection.collections.users.drop(() => {
-    done();
+  const { users, comments, blogposts } = mongoose.connection.collections;
+  // Mongo and Mongoose will not let you drop multiple collections simultaneously.  So we have to do this
+  // 'callback of doom' thing.
+  users.drop(() => {
+    comments.drop(() => {
+      blogposts.drop(() => {
+        done();
+      })
+    })
   });
 });

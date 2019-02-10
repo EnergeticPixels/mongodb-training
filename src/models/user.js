@@ -12,7 +12,11 @@ const UserSchema = new Schema({
     required: [true, 'Name is required.']
   },
   likes: Number,
-  posts: [PostSchema]
+  posts: [PostSchema],
+  blogPosts: [{ 
+    type: Schema.Types.ObjectId,
+    ref: 'blogPost'
+  }]
 });
 
 // must use the old method of function() { in this instance and NOT

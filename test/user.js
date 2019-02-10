@@ -1,6 +1,8 @@
 const assert = require('assert');
 
 const User = require('../src/models/user');
+const Comment = require('../src/models/comment');
+const BlogPost = require('../src/models/blogPost');
 
 require('./test_helper.js');
 
@@ -224,6 +226,60 @@ describe('User Model', () => {
           done();
         })
     });
+  });
+
+  describe('Associations', () => {
+    // init'ing model instance of each collection
+    let joe, blogPost, comment;
+
+    beforeEach((done) => {
+      // nothing below indicates that 'joe' owns the 'blogpost' or a 'comment'
+      joe = new User({ name: 'Joe' });
+      blogPost = new BlogPost({ title: 'JS is Great', content: 'Yep it really is' });
+      comment = new Comment({ content: 'Congrats on great post' });
+
+      // this is where we associate blogpost with joe then save.
+      // these two below are arrays.  Notice the plural words.
+      joe.blogPosts.push(blogPost);
+      blogPost.comments.push(comment);
+      // below is a one to one relationship
+      comment.user = joe;
+
+      // this is how we chain each 3 saves to make sure they all get saved before
+      // calling a 'then()' return
+      Promise.all([ joe.save(), blogPost.save(), comment.save() ])
+        .then(() => done());
+    });
+
+    it.only('saves a relation between a user and a blogpost', (done) => {
+
+      User.findOne({ name: 'Joe' })
+        // idea of using 'query' method of mongodb
+        // mongoose does not allow you to recursively crawl from user to all blogposts and
+        // comments because it could take an ungodly amount of time to return the data.
+        // must explictly do each populate.
+        .populate('blogPosts')
+        .then((user) => {
+           console.info(user);
+           // console.info(user.blogPosts[0]);
+           // console.info();
+          
+          assert(user.blogPosts[0].title === 'JS is Great')
+          done();
+        })
+    });
+
+    xit('', (done) => {
+
+    });
+
+    xit('', (done) => {
+
+    });
+
+    xit('', (done) => {
+
+    })
   });
 
 })
