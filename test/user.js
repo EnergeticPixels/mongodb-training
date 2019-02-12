@@ -296,4 +296,34 @@ describe('User Model', () => {
     });
   });
 
+  describe('Middleware', () => {
+
+    let joe, blogPost;
+
+    beforeEach((done) => {
+      // nothing below indicates that 'joe' owns the 'blogpost' or a 'comment'
+      joe = new User({ name: 'Joe' });
+      blogPost = new BlogPost({ title: 'JS is Great', content: 'Yep it really is' });
+      
+      // this is where we associate blogpost with joe then save.
+      // these two below are arrays.  Notice the plural words.
+      joe.blogPosts.push(blogPost);
+
+      // this is how we chain each 2 saves to make sure they all get saved before
+      // calling a 'then()' return
+      Promise.all([ joe.save(), blogPost.save() ])
+        .then(() => done());
+    });
+
+    it('users cleanup dangling blogPosts on remove', (done) => {
+
+      joe.remove()
+        .then(() => BlogPost.countDocuments())
+        .then((result) => {
+          assert(result === 0);
+          done();
+        });
+    });
+  });
+
 })
